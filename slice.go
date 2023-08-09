@@ -37,3 +37,20 @@ func SliceDelete[T Number](s []T, idx int) ([]T, error) {
 type Number interface {
 	~int | ~float64 | ~float32
 }
+
+//add方法
+func Add[T Number](src []T, e T, idx int) ([]T, error) {
+	length := len(src)
+	if idx < 0 || idx >= length {
+		return nil, errors.New("下标超出范围")
+	}
+	var zeroValue T
+	src = append(src, zeroValue)
+	for i := len(src) - 1; i > idx; i-- {
+		if i-1 >= 0 {
+			src[i] = src[i-1]
+		}
+	}
+	src[idx] = e
+	return src, nil
+}
